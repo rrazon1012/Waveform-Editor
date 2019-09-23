@@ -33,8 +33,6 @@ namespace WindowsFormsApp2
                 float initY = panel1.Height/2;
                 float eF = 20;
 
-            float yEx = Height/2;
-
                 for (float x = 0; x < Width; x += 0.005F)
                 {
                     y2 = 2*(float)Complex.Pow(
