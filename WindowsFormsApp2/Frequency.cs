@@ -28,7 +28,7 @@ namespace WindowsFormsApp2
 
             float y2 = 0;
 
-            float yEx = 300;
+            float yEx = Height/2;
             float eF = 50;
 
 
