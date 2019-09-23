@@ -15,6 +15,7 @@ namespace WindowsFormsApp2
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void ContextMenuStrip1_Opening(object sender, CancelEventArgs e)
