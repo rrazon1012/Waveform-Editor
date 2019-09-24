@@ -11,7 +11,6 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp2
 {
-
     public partial class Frequency : Form
     {
         int toTest = 1;
@@ -76,16 +75,13 @@ namespace WindowsFormsApp2
                 {
                     draw();
                 }
-            }
+            }            
         }
-       
-
         private void draw()
         {
             using (Graphics g = panel1.CreateGraphics())
             {
                 g.Clear(BG2);
-                //g.Clear(BG2);
                 Pen pen = new Pen(Brushes.White, 2.0F);
                 float x1 = 0;
                 float y1 = 0;
@@ -94,38 +90,36 @@ namespace WindowsFormsApp2
                 float initY = panel1.Height / 2;
                 float eF = 30;
 
-                for (float x = 0; x < 10000; x += 0.01F)
+                for (float x = 0; x < Width; x += 0.01F)
                 {
-                    y2 = toTest * (float)Math.Sin((x + offsetX) / toTest); // Sine wave
+                    y2 = toTest * (float)Math.Sin((x+offsetX)/toTest); // Sine wave
                     g.DrawLine(pen, x1 * eF, y1 * eF + initY, x * eF, y2 * eF + initY);
                     x1 = x;
                     y1 = y2;
                 }
-            }
-        } 
+            }        
+        }
 
         private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
             remember = !remember;
         }
 
-      
-
         private void HScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
-
-             if (e.Type == ScrollEventType.SmallDecrement)
-             {
-                 offsetX -= size;
-             }
-             else if (e.Type == ScrollEventType.SmallIncrement)
-             {
-                   offsetX += size;
-             }
-             else
-             {
-                 offsetX = e.NewValue;
-             }
+            
+            if (e.Type == ScrollEventType.SmallDecrement)
+            {
+                offsetX -= size;
+            }
+            else if (e.Type == ScrollEventType.SmallIncrement)
+            {
+                  offsetX += size;
+            }
+            else
+            {
+                offsetX = e.NewValue;
+            }
             draw();
         }
     }
