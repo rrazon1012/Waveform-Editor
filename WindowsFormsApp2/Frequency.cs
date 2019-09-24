@@ -17,7 +17,8 @@ namespace WindowsFormsApp2
         Color BG2 = Color.DimGray;
         public Frequency()
         {
-            InitializeComponent();         
+            InitializeComponent();
+           
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -33,7 +34,7 @@ namespace WindowsFormsApp2
                 float initY = panel1.Height/2;
                 float eF = 20;
 
-                for (float x = 0; x < Width; x += 0.005F)
+                for (float x = 0; x < 1000; x += 0.005F)
                 {
                     y2 = 2*(float)Complex.Pow(
                         Math.Sin(2*x), x).Real; // Sine wave
@@ -60,7 +61,12 @@ namespace WindowsFormsApp2
             {
                 g.Clear(BG2);
             }
+            
+        }
+
+        private void HScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
 
         }
-    }
+    } 
 }

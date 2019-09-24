@@ -88,6 +88,7 @@
             this.hScrollBar1.Name = "hScrollBar1";
             this.hScrollBar1.Size = new System.Drawing.Size(590, 17);
             this.hScrollBar1.TabIndex = 4;
+            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HScrollBar1_Scroll);
             // 
             // Time
             // 
