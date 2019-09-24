@@ -82,14 +82,6 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.PictureBox1_Click);
             // 
-            // hScrollBar1
-            // 
-            this.hScrollBar1.Location = new System.Drawing.Point(-2, 271);
-            this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(590, 17);
-            this.hScrollBar1.TabIndex = 4;
-            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HScrollBar1_Scroll);
-            // 
             // Time
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
