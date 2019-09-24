@@ -77,6 +77,9 @@
     <Compile Include="Frequency.Designer.cs">
       <DependentUpon>Frequency.cs</DependentUpon>
     </Compile>
+    <Compile Include="MyPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Time.cs">

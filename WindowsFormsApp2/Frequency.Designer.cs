@@ -30,7 +30,7 @@
         {
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1 = new MyPanel();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.panel1.SuspendLayout();
@@ -58,6 +58,7 @@
             // 
             // panel1
             // 
+
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.hScrollBar1);
             this.panel1.Location = new System.Drawing.Point(151, 12);
@@ -85,6 +86,7 @@
             this.hScrollBar1.Size = new System.Drawing.Size(602, 17);
             this.hScrollBar1.TabIndex = 0;
             this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HScrollBar1_Scroll);
+           
             // 
             // Frequency
             // 
