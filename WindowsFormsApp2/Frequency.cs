@@ -11,6 +11,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp2
 {
+
     public partial class Frequency : Form
     {
         int toTest = 1;
@@ -39,12 +40,11 @@ namespace WindowsFormsApp2
 
         private void Panel1_Paint(object sender, PaintEventArgs e)
         {
-            panel1.BackColor = BG2;
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            using (Graphics g = panel1.CreateGraphics())
+            using (Graphics g = CreateGraphics())
             {
                 g.Clear(BG2);
                 toTest = remember ? toTest : 1;
@@ -75,11 +75,13 @@ namespace WindowsFormsApp2
                 {
                     draw();
                 }
-            }            
+            }
         }
+       
+
         private void draw()
         {
-            using (Graphics g = panel1.CreateGraphics())
+            using (Graphics g = CreateGraphics())
             {
                 g.Clear(BG2);
                 Pen pen = new Pen(Brushes.White, 2.0F);
@@ -87,23 +89,25 @@ namespace WindowsFormsApp2
                 float y1 = 0;
 
                 float y2 = 0;
-                float initY = panel1.Height / 2;
+                float initY = Height / 2;
                 float eF = 30;
 
-                for (float x = 0; x < Width; x += 0.01F)
+                for (float x = 0; x < 10000; x += 0.01F)
                 {
-                    y2 = toTest * (float)Math.Sin((x+offsetX)/toTest); // Sine wave
+                    y2 = toTest * (float)Math.Sin((x + offsetX) / toTest); // Sine wave
                     g.DrawLine(pen, x1 * eF, y1 * eF + initY, x * eF, y2 * eF + initY);
                     x1 = x;
                     y1 = y2;
                 }
-            }        
-        }
+            }
+        } 
 
         private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
             remember = !remember;
         }
+
+      
 
         private void HScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
@@ -121,6 +125,11 @@ namespace WindowsFormsApp2
                 offsetX = e.NewValue;
             }
             draw();
+        }
+
+        private void FormsPlot1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
