@@ -32,5 +32,10 @@ namespace WindowsFormsApp2
         {
 
         }
+
+        private void HScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
     }
 }
