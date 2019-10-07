@@ -31,7 +31,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.formsPlot1 = new ScottPlot.FormsPlot();
+            this.myPanel1 = new WindowsFormsApp2.MyPanel();
             this.SuspendLayout();
             // 
             // button1
@@ -68,26 +68,20 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1_CheckedChanged);
             // 
-            // formsPlot1
+            // myPanel1
             // 
-            this.formsPlot1.Location = new System.Drawing.Point(327, 18);
-            this.formsPlot1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.formsPlot1.Name = "formsPlot1";
-            this.formsPlot1.Size = new System.Drawing.Size(750, 538);
-            this.formsPlot1.TabIndex = 4;
-            this.formsPlot1.Load += new System.EventHandler(this.FormsPlot1_Load);
-            
-            double[] xs = new double[] { 1, 2, 3, 4, 5 };
-            double[] ys = new double[] { 1, 4, 9, 16, 25 };
-            formsPlot1.plt.PlotScatter(xs, ys);
-            formsPlot1.Render();
+            this.myPanel1.Location = new System.Drawing.Point(340, 37);
+            this.myPanel1.Name = "myPanel1";
+            this.myPanel1.Size = new System.Drawing.Size(906, 546);
+            this.myPanel1.TabIndex = 4;
+            this.myPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.MyPanel1_Paint);
             // 
             // Frequency
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1143, 491);
-            this.Controls.Add(this.formsPlot1);
+            this.ClientSize = new System.Drawing.Size(1277, 637);
+            this.Controls.Add(this.myPanel1);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -105,6 +99,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckBox checkBox1;
-        private ScottPlot.FormsPlot formsPlot1;
+        private MyPanel myPanel1;
+        private DFT myDFT;
     }
 }

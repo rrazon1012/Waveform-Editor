@@ -46,9 +46,9 @@ namespace WindowsFormsApp2
         private void OpenToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Time time = new Time();
-                //time.Show();
-            Frequency frequency = new Frequency();
-                frequency.Show();
+                time.Show();
+            //Frequency frequency = new Frequency();
+                //frequency.Show();
         }
     }
 
