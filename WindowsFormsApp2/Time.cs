@@ -8,13 +8,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Numerics;
+using System.IO;
+
+public struct Wavhdr
+{
+    int RIFF;
+    int filesize_minus_4;
+    int fmt_;
+    int fmt_size;
+    short format_tag;
+    short nchannels;
+    int samples_per_sec;
+    int avg_bytes_per_sec;
+    short nblock_align;
+    short bits_per_sample;
+    int data;
+    int data_size;
+}
 
 namespace WindowsFormsApp2
 {
     public partial class Time : Form
     {
+        private byte[] buffer;
         public Time()
         {
+            //Wavhdr wav = new Wavhdr();
+
             InitializeComponent();
             //double[] samples = {0, 0.707, 1, 0.707, 0, -0.707,-1,-0.707};
             double[] samples = {
@@ -59,15 +79,15 @@ namespace WindowsFormsApp2
                 .45e-7, .166e-6, .111e-6, .193e-6, -.1e-8, 31.99999988,
                 278e-6, .192e-6, .117e-6, -.376e-6, -.64e-7, .2787e-6
             };
-           
+
 
 
             double[] freq = DFT.dft(samples);
-            
+
 
             for (int i = 0; i < samples.Length; i++)
             {
-                chart1.Series["Amplitude"].Points.AddXY(i,freq[i]);
+                chart1.Series["Amplitude"].Points.AddXY(i, freq[i]);
             }
         }
 
@@ -78,13 +98,13 @@ namespace WindowsFormsApp2
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            
+
         }
 
 
         private void Time_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void HScrollBar1_Scroll(object sender, ScrollEventArgs e)

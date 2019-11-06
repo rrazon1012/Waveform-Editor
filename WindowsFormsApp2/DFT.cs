@@ -14,7 +14,7 @@ namespace WindowsFormsApp2
             public double imag;
             public double real;
         }
-      
+
         public static double[] dft(double[] samples)
         {
             int N = samples.Length;
@@ -30,8 +30,8 @@ namespace WindowsFormsApp2
                     real[f] += samples[t] * Math.Cos(a * t);
                     imag[f] -= samples[t] * Math.Sin(a * t);
                 }
-                
-                result[f] = Math.Sqrt((real[f] * real[f]) + (imag[f] * imag[f]))/N;
+
+                result[f] = Math.Sqrt((real[f] * real[f]) + (imag[f] * imag[f])) / N;
                 Console.WriteLine("Frequency = " + f);
                 Console.WriteLine("Amplitude = " + result[f]);
                 Console.WriteLine("Phase Shift = " + tan(real[f], imag[f]));
@@ -39,16 +39,19 @@ namespace WindowsFormsApp2
             }
             return result;
         }
-        public static double[] bdft(double[] samples) {
+        public static double[] bdft(double[] samples)
+        {
             int N = samples.Length;
             int m = N;
             double[] real = new double[N];
             double[] imag = new double[N];
             double[] result = new double[N];
             double pi = 2 * Math.PI / N;
-            for (int f = 0; f < N-1; f++) {
+            for (int f = 0; f < N - 1; f++)
+            {
                 double a = f * pi;
-                for (int t = 0; t < N-1; t++) {
+                for (int t = 0; t < N - 1; t++)
+                {
                     real[f] += samples[t] * Math.Cos(a * t);
                     imag[f] -= samples[t] * Math.Sin(a * t);
                 }
@@ -56,11 +59,11 @@ namespace WindowsFormsApp2
                 imag[f] = real[f] / N;
                 double amp = Amplitude(real[f], imag[f]);
                 double phase = tan(real[f], imag[f]);
-               //Console.WriteLine("Frequency = " + f);
-               //Console.WriteLine("Amplitude = " + amp);
-               //Console.WriteLine("Phase = " + phase);
-                result[f] = Math.Sqrt( (real[f] * real[f]) + (imag[f] * imag[f]));
-                
+                //Console.WriteLine("Frequency = " + f);
+                //Console.WriteLine("Amplitude = " + amp);
+                //Console.WriteLine("Phase = " + phase);
+                result[f] = Math.Sqrt((real[f] * real[f]) + (imag[f] * imag[f]));
+
             }
             return result;
         }
@@ -78,36 +81,41 @@ namespace WindowsFormsApp2
                 double a = f * pi;
                 for (int t = 0; t < N; t++)
                 {
-                    real[f] += samples[t] * Math.Cos(a * t)/N;
-                    imag[f] -= samples[t] * Math.Sin(a * t)/N;
+                    real[f] += samples[t] * Math.Cos(a * t) / N;
+                    imag[f] -= samples[t] * Math.Sin(a * t) / N;
                 }
-                result[f] = Math.Sqrt(real[f]* real[f] + imag[f] * imag[f]);
+                result[f] = Math.Sqrt(real[f] * real[f] + imag[f] * imag[f]);
             }
             result = idft(result);
             return result;
         }
 
-        public static double[] idft(double[] a) {
+        public static double[] idft(double[] a)
+        {
             int N = a.Length;
             double[] samples = new double[N];
             double pi = 2 * Math.PI / N;
-            for (int f = 0; f < N; f++) {
+            for (int f = 0; f < N; f++)
+            {
                 double c = f * pi;
-                for (int t = 0; t < N; t++) {
-                    samples[f] +=  a[t] * (Math.Cos(c*t) + Math.Sin(c*t)); 
+                for (int t = 0; t < N; t++)
+                {
+                    samples[f] += a[t] * (Math.Cos(c * t) + Math.Sin(c * t));
                 }
             }
             return samples;
         }
 
-        public static double Amplitude(double real, double imag) {
+        public static double Amplitude(double real, double imag)
+        {
             double amp = Math.Sqrt(real * real + imag * imag);
             return amp;
         }
-        public static double tan(double real, double imag) {
-            double tan = Math.Atan(imag/real) * 180 / Math.PI;
+        public static double tan(double real, double imag)
+        {
+            double tan = Math.Atan(imag / real) * 180 / Math.PI;
             return tan;
         }
-        
+
     }
 }

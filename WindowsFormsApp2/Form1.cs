@@ -25,7 +25,7 @@ namespace WindowsFormsApp2
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -35,7 +35,7 @@ namespace WindowsFormsApp2
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           // this.close();
+            // this.close();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -44,11 +44,11 @@ namespace WindowsFormsApp2
         }
 
         private void OpenToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Time time = new Time();
-                time.Show();
-            //Frequency frequency = new Frequency();
-                //frequency.Show();
+        {    
+            //Time time = new Time();
+            //time.Show();
+            Frequency frequency = new Frequency();
+            frequency.Show();
         }
     }
 
