@@ -80,14 +80,17 @@ namespace WindowsFormsApp2
                 DataID = binreader.ReadInt32();
                 DataSize = binreader.ReadInt32();
 
-                for (int i = 0; i < (DataSize-1)/2; i++)
+                for (int i = 0; i < (DataSize - 1) / 2; i++)
                 {
                     samplez.Add(Convert.ToDouble(binreader.ReadInt16()));
                 }
                 samples = samplez.ToArray();
+                //samples = sampleArray;
+                select = false;
                 InitializeComponent();
             }
-            catch (System.OutOfMemoryException e) {
+            catch (System.OutOfMemoryException e)
+            {
                 Console.WriteLine(e);
             }
         }
@@ -140,7 +143,7 @@ namespace WindowsFormsApp2
             catch { }
         }
 
-      
+
         private void FormsPlot1_Load(object sender, EventArgs e)
         {
 
@@ -159,14 +162,16 @@ namespace WindowsFormsApp2
 
         private void chart1_MouseDown(object sender, MouseEventArgs e)
         {
-            if (select == true) {
+            if (select == true)
+            {
                 mdown = e.Location;
                 selectedPoints = new List<DataPoint>();
                 selStart = (int)chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
             }
-            if (paste == true && copyArray != null) {
+            if (paste == true && copyArray != null)
+            {
                 int pasteX = (int)chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
-
+                DataSize += copyArray.Length;
                 //size of the new samples array
                 int newsize = samples.Length + copyArray.Length;
                 double[] tempArray = new double[newsize];
@@ -175,25 +180,26 @@ namespace WindowsFormsApp2
                 int shiftsize = samples.Length - pasteX;
                 double[] shiftArray = new double[shiftsize];
 
-                for (int i = pasteX,j = 0; i < samples.Length;i++,j++) //put everything after paste x in a temporary array
+                for (int i = pasteX, j = 0; i < samples.Length; i++, j++) //put everything after paste x in a temporary array
                 {
                     shiftArray[j] = samples[i];
                 }
 
-                for (int i = 0; i < pasteX; i++) {
+                for (int i = 0; i < pasteX; i++)
+                {
                     tempArray[i] = samples[i];
                 }
-                for (int i = pasteX,j=0; i < pasteX+copyArray.Length;i++,j++)
+                for (int i = pasteX, j = 0; i < pasteX + copyArray.Length; i++, j++)
                 {
                     tempArray[i] = copyArray[j];
                 }
-                Console.WriteLine(pasteX+copyArray.Length);
-                Console.WriteLine(newsize);
-                for (int i = pasteX+copyArray.Length,j = pasteX; i < newsize; i++,j++)
+                //Console.WriteLine(pasteX + copyArray.Length);
+                //Console.WriteLine(newsize);
+                for (int i = pasteX + copyArray.Length, j = pasteX; i < newsize; i++, j++)
                 {
                     tempArray[i] = samples[j];
                 }
-                
+
                 samples = tempArray;
                 chart1.Series["wave"].Points.DataBindY(samples);
                 paste = false;
@@ -235,13 +241,15 @@ namespace WindowsFormsApp2
                     dp.Color = selectedPoints.Contains(dp) ? Color.Black : Color.Red;
                 }
                 selEnd = (int)chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
-                select = false;   
+                Console.WriteLine("selStart" + selStart);
+                Console.WriteLine("SelEnd " + selEnd);
+                select = false;
             }
         }
 
         public Rectangle GetRectangle(Point p1, Point p2)
         {
-            return new Rectangle(Math.Min(p1.X, p2.X), Math.Min(p1.Y,p2.Y), Math.Abs(p1.X - p2.X), Math.Abs(p1.Y - p2.Y));
+            return new Rectangle(Math.Min(p1.X, p2.X), Math.Min(p1.Y, p2.Y), Math.Abs(p1.X - p2.X), Math.Abs(p1.Y - p2.Y));
         }
 
         //Select
@@ -262,34 +270,50 @@ namespace WindowsFormsApp2
         //Cut
         private void Button2_Click(object sender, EventArgs e)
         {
-            if (selectedPoints != null) {
+            if (selectedPoints != null)
+            {
 
                 //foreach (DataPoint p in selectedPoints) {
                 //    chart1.Series["wave"].Points.Remove(p);
                 //}
                 int delsize = selEnd - selStart;
+                DataSize -= delsize;
                 int newsize = samples.Length - delsize;
-                for (int i = 0; i < samples.Length; i++) {
-                    if (i > selStart && i < selEnd) {
-                        samples[i] = double.NaN;
-                    }
-                }
+                //for (int i = 0; i < samples.Length; i++)
+                //{
+                //    if (i > selStart && i < selEnd)
+                //    {
+                //        samples[i] = double.NaN;
+                //    }
+                //}
+
                 double[] tempSamples = new double[samples.Length];
                 int tempIndex = 0, currIndex = 0;
-                while (currIndex < samples.Length ) {
-                    if (!(double.IsNaN(samples[currIndex])))
-                    {
-                        tempSamples[tempIndex] = samples[currIndex];
-                        tempIndex++;
-                        currIndex++;
-                    }
-                    else {
-                        currIndex++;
-                    }
-                    
+                for (int i = 0; i < selStart; i++)
+                {
+                    tempSamples[i] = samples[i];
                 }
+                for (int i = selStart,j = selEnd; j < tempSamples.Length;j++,i++)
+                {
+                    tempSamples[i] = samples[j];
+                }
+                
+                //while (currIndex < samples.Length)
+                //{
+                //    if (!(double.IsNaN(samples[currIndex])))
+                //    {
+                //        tempSamples[tempIndex] = samples[currIndex];
+                //        tempIndex++;
+                //        currIndex++;
+                //    }
+                //    else
+                //    {
+                //        currIndex++;
+                //    }
+
+                //}
                 samples = tempSamples;
-               
+
                 chart1.Series["wave"].Points.DataBindY(samples);
                 selectedPoints = null;
             }
@@ -298,11 +322,12 @@ namespace WindowsFormsApp2
         //copy
         private void Button3_Click(object sender, EventArgs e)
         {
-            if (selectedPoints != null) {
+            if (selectedPoints != null)
+            {
 
                 int copysize = selEnd - selStart;
                 copyArray = new double[copysize];
-                for (int i = selStart,j = 0; i < selEnd; i++,j++)
+                for (int i = selStart, j = 0; i < selEnd; i++, j++)
                 {
                     copyArray[j] = samples[i];
                     //Console.WriteLine(samples[i]);
@@ -318,7 +343,8 @@ namespace WindowsFormsApp2
             {
                 paste = true;
             }
-            else {
+            else
+            {
                 paste = false;
             }
         }
@@ -328,9 +354,10 @@ namespace WindowsFormsApp2
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "Save Wav file";
             sfd.Filter = "Wav File | *.wav";
-            if (sfd.ShowDialog() == DialogResult.OK) {
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
                 List<double> samplez = samples.ToList();
-                FileStream fs = new FileStream(sfd.FileName,FileMode.Create,FileAccess.Write);
+                FileStream fs = new FileStream(sfd.FileName, FileMode.Create, FileAccess.Write);
                 BinaryWriter bw = new BinaryWriter(fs);
                 bw.Write(Convert.ToInt32(ChunkId));
                 bw.Write(Convert.ToInt32(filesize));
@@ -343,20 +370,25 @@ namespace WindowsFormsApp2
                 bw.Write(Convert.ToInt32(fmtAvgBPS));
                 bw.Write(Convert.ToInt16(fmtblockalign));
                 bw.Write(Convert.ToInt16(bitdepth));
-                if (fmtsize == 18) {
+                if (fmtsize == 18)
+                {
                     bw.Write(Convert.ToInt16(fmtextrasize));
                 }
                 bw.Write(Convert.ToInt32(DataID));
                 bw.Write(Convert.ToInt32(DataSize));
-                
+
                 //samples = new double[samplestotalcount];
-                for (int i = 0; i < (DataSize-1)/2; i++)
+                for (int i = 0; i < (DataSize - 1) / 2; i++)
                 {
                     bw.Write(Convert.ToInt16(samplez[i]));
                 }
                 bw.Close();
                 fs.Close();
             }
+        }
+
+        public double[] getSamples() {
+            return samples;
         }
     }
 }

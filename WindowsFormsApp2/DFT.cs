@@ -32,13 +32,39 @@ namespace WindowsFormsApp2
                 }
 
                 result[f] = Math.Sqrt((real[f] * real[f]) + (imag[f] * imag[f])) / N;
-                Console.WriteLine("Frequency = " + f);
-                Console.WriteLine("Amplitude = " + result[f]);
-                Console.WriteLine("Phase Shift = " + tan(real[f], imag[f]));
-                Console.WriteLine(real[f] + " " + imag[f]);
+                //Console.WriteLine("Frequency = " + f);
+                //Console.WriteLine("Amplitude = " + result[f]);
+                //Console.WriteLine("Phase Shift = " + tan(real[f], imag[f]));
+                //Console.WriteLine(real[f] + " " + imag[f]);
             }
             return result;
         }
+
+        public static double[] paralleldft(double[] samples) {
+            int N = samples.Length;
+            double[] real = new double[N];
+            double[] imag = new double[N];
+            double[] result = new double[N];
+            double pi = 2 * Math.PI / N;
+            Parallel.For(0, N, f =>
+            {
+                double a = f * pi;
+                for (int t = 0; t < N; t++)
+                {
+                    real[f] += samples[t] * Math.Cos(a * t);
+                    imag[f] -= samples[t] * Math.Sin(a * t);
+                }
+
+                result[f] = Math.Sqrt((real[f] * real[f]) + (imag[f] * imag[f])) / N;
+                //Console.WriteLine("Frequency = " + f);
+                //Console.WriteLine("Amplitude = " + result[f]);
+                //Console.WriteLine("Phase Shift = " + tan(real[f], imag[f]));
+                //Console.WriteLine(real[f] + " " + imag[f]);
+            }
+            );
+            return result;
+        }
+
         public static double[] bdft(double[] samples)
         {
             int N = samples.Length;
