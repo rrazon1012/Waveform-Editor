@@ -146,18 +146,6 @@ namespace WindowsFormsApp2
 
         private void FormsPlot1_Load(object sender, EventArgs e)
         {
-
-            /*for (int n = 1; n < 10000; n++)
-            {
-                x1s[n] = n;
-                y1s[n] = rnd.Next(-50, 50);
-            }
-            //double[] xs = {0,1,2,3,4};
-            //double[] ys = new double[] { 1, 4, 9, 16, 25 };
-            formsPlot1.plt.PlotScatter(x1s, y1s);
-            formsPlot1.Render(); */
-
-
         }
 
         private void chart1_MouseDown(object sender, MouseEventArgs e)
@@ -193,8 +181,7 @@ namespace WindowsFormsApp2
                 {
                     tempArray[i] = copyArray[j];
                 }
-                //Console.WriteLine(pasteX + copyArray.Length);
-                //Console.WriteLine(newsize);
+                
                 for (int i = pasteX + copyArray.Length, j = pasteX; i < newsize; i++, j++)
                 {
                     tempArray[i] = samples[j];
@@ -236,8 +223,6 @@ namespace WindowsFormsApp2
                 foreach (DataPoint dp in chart1.Series["wave"].Points)
                 {
                     int n = (int)dp.XValue;
-                    //Console.WriteLine(n);
-                    //chart1.Series["wave"].Points[n].Color = Color.Red;
                     dp.Color = selectedPoints.Contains(dp) ? Color.Black : Color.Red;
                 }
                 selEnd = (int)chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
@@ -389,6 +374,16 @@ namespace WindowsFormsApp2
 
         public double[] getSamples() {
             return samples;
+        }
+
+        public void setSample(double[] filteredsample) {
+            samples = filteredsample;
+            chart1.Series["wave"].Points.DataBindY(samples);
+        }
+
+        private void Chart1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -31,6 +31,8 @@ namespace WindowsFormsApp2
         int DataSize;
         byte[] buffer;
         double[] samples;
+        Frequency frequency;
+        Time time;
         public Form1()
         {
             InitializeComponent();
@@ -111,17 +113,17 @@ namespace WindowsFormsApp2
             //a.Start();
             //b.Start();
             openTime();
-            openFrequency();
         }
 
         private void openTime() {
-            Frequency frequency = new Frequency();
+            frequency = new Frequency();
             frequency.Show();
             samples = frequency.getSamples();
         }
-        private void openFrequency() {
-            Time time = new Time(samples);
-            time.Show();
+        
+
+        private void applyFilter() {
+            samples = time.getSample();
         }
 
         private void SaveToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -160,6 +162,18 @@ namespace WindowsFormsApp2
             //    bw.Close();
             //    fs.Close();
             //}
+        }
+
+        private void Button1_Click_1(object sender, EventArgs e)
+        {
+            applyFilter();
+            frequency.setSample(samples);
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            time = new Time(samples);
+            time.Show();
         }
     }
 }
