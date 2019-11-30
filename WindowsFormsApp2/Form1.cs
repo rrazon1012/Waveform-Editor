@@ -18,8 +18,7 @@ namespace WindowsFormsApp2
 
         [DllImport("winmm.dll")]
         private static extern long mciSendString(
-            string command, StringBuilder retstring, int ReturnLength, IntPtr callback);
-
+            string command, StringBuilder retstring, int ReturnLength, IntPtr callback);        
         double[] samples;
         public Form1()
         {
@@ -103,7 +102,7 @@ namespace WindowsFormsApp2
             openTime();
             openFrequency();
         }
-
+        String output = "c:\\recorded\\Recorded.wav";
         private void openTime() {
             Frequency frequency = new Frequency();
             frequency.Show();
@@ -121,8 +120,7 @@ namespace WindowsFormsApp2
         }
 
         private void SaveToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            
+        {            
             //Frequency frequency = new Frequency(record.sample, record.DataSize);
             //frequency.Show();
             //samples = frequency.getSamples();
@@ -173,9 +171,9 @@ namespace WindowsFormsApp2
         private void StopToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DrawString("Stopped");
-            mciSendString("save recsound c:\\recorded\\Recorded.wav", null, 0, IntPtr.Zero);
+            mciSendString("save recsound " + output, null, 0, IntPtr.Zero);
             mciSendString("close recsound ", null, 0, IntPtr.Zero);
-            openTime("c:\\recorded\\Recorded.wav");
+            openTime(output);
         }
 
         public void DrawString(String msg)
