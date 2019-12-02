@@ -20,6 +20,8 @@ namespace WindowsFormsApp2
         private static extern long mciSendString(
             string command, StringBuilder retstring, int ReturnLength, IntPtr callback);        
         double[] samples;
+        Frequency frequency;
+        Time time;
         public Form1()
         {
             InitializeComponent();
@@ -50,7 +52,6 @@ namespace WindowsFormsApp2
         {
 
         }
-        [STAThread]
         private void OpenToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             //List<double> samplez = new List<double>();
@@ -100,13 +101,17 @@ namespace WindowsFormsApp2
             //a.Start();
             //b.Start();
             openTime();
-            openFrequency();
         }
         String output = "c:\\recorded\\Recorded.wav";
         private void openTime() {
-            Frequency frequency = new Frequency();
+            frequency = new Frequency();
             frequency.Show();
             samples = frequency.getSamples();
+        }
+
+
+        private void applyFilter() {
+            samples = time.getSample();
         }
         private void openTime(String path)
         {
@@ -172,7 +177,8 @@ namespace WindowsFormsApp2
         {
             DrawString("Stopped");
             mciSendString("save recsound " + output, null, 0, IntPtr.Zero);
-            mciSendString("close recsound ", null, 0, IntPtr.Zero);            
+            mciSendString("close recsound ", null, 0, IntPtr.Zero);
+            openTime(output);
         }
 
         public void DrawString(String msg)
@@ -191,16 +197,16 @@ namespace WindowsFormsApp2
             formGraphics.Dispose();
         }
 
-        private void PlaybackToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Button1_Click_1(object sender, EventArgs e)
         {
-            DrawString("Playing...");
-            mciSendString("play recsound notify", null, 0, IntPtr.Zero);
-            mciSendString("close recsound ", null, 0, IntPtr.Zero);
+            applyFilter();
+            frequency.setSample(samples);
         }
 
-        private void DisplayFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
-            openTime(output);
+            time = new Time(samples);
+            time.Show();
         }
     }
 }

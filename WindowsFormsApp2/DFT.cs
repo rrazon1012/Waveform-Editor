@@ -9,17 +9,14 @@ namespace WindowsFormsApp2
 {
     class DFT
     {
-        class complex
-        {
-            public double imag;
-            public double real;
-        }
+        double[] real;
+        double[] imag;
 
-        public static double[] dft(double[] samples)
+        public double[] dft(double[] samples)
         {
             int N = samples.Length;
-            double[] real = new double[N];
-            double[] imag = new double[N];
+            real = new double[N];
+            imag = new double[N];
             double[] result = new double[N];
             double pi = 2 * Math.PI / N;
             for (int f = 0; f < N; f++)
@@ -40,10 +37,10 @@ namespace WindowsFormsApp2
             return result;
         }
 
-        public static double[] paralleldft(double[] samples) {
+        public double[] paralleldft(double[] samples) {
             int N = samples.Length;
-            double[] real = new double[N];
-            double[] imag = new double[N];
+            real = new double[N];
+            imag = new double[N];
             double[] result = new double[N];
             double pi = 2 * Math.PI / N;
             Parallel.For(0, N, f =>
@@ -56,10 +53,6 @@ namespace WindowsFormsApp2
                 }
 
                 result[f] = Math.Sqrt((real[f] * real[f]) + (imag[f] * imag[f])) / N;
-                //Console.WriteLine("Frequency = " + f);
-                //Console.WriteLine("Amplitude = " + result[f]);
-                //Console.WriteLine("Phase Shift = " + tan(real[f], imag[f]));
-                //Console.WriteLine(real[f] + " " + imag[f]);
             }
             );
             return result;
@@ -85,9 +78,6 @@ namespace WindowsFormsApp2
                 imag[f] = real[f] / N;
                 double amp = Amplitude(real[f], imag[f]);
                 double phase = tan(real[f], imag[f]);
-                //Console.WriteLine("Frequency = " + f);
-                //Console.WriteLine("Amplitude = " + amp);
-                //Console.WriteLine("Phase = " + phase);
                 result[f] = Math.Sqrt((real[f] * real[f]) + (imag[f] * imag[f]));
 
             }
@@ -112,23 +102,23 @@ namespace WindowsFormsApp2
                 }
                 result[f] = Math.Sqrt(real[f] * real[f] + imag[f] * imag[f]);
             }
-            result = idft(result);
+            //result = idft(result);
             return result;
         }
 
-        public static double[] idft(double[] a)
+        public double[] idft(double[] a)
         {
             int N = a.Length;
             double[] samples = new double[N];
             double pi = 2 * Math.PI / N;
-            for (int f = 0; f < N; f++)
+            Parallel.For(0, N, f =>
             {
                 double c = f * pi;
                 for (int t = 0; t < N; t++)
                 {
                     samples[f] += a[t] * (Math.Cos(c * t) + Math.Sin(c * t));
                 }
-            }
+            });
             return samples;
         }
 
