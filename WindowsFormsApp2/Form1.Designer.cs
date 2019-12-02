@@ -41,6 +41,8 @@
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.playbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.displayFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -110,7 +112,9 @@
             // 
             this.saveToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.startToolStripMenuItem,
-            this.stopToolStripMenuItem});
+            this.stopToolStripMenuItem,
+            this.playbackToolStripMenuItem,
+            this.displayFileToolStripMenuItem});
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
             this.saveToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem1.Text = "Record...";
@@ -141,6 +145,20 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 22);
             this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // playbackToolStripMenuItem
+            // 
+            this.playbackToolStripMenuItem.Name = "playbackToolStripMenuItem";
+            this.playbackToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.playbackToolStripMenuItem.Text = "Playback...";
+            this.playbackToolStripMenuItem.Click += new System.EventHandler(this.PlaybackToolStripMenuItem_Click);
+            // 
+            // displayFileToolStripMenuItem
+            // 
+            this.displayFileToolStripMenuItem.Name = "displayFileToolStripMenuItem";
+            this.displayFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.displayFileToolStripMenuItem.Text = "Display file...";
+            this.displayFileToolStripMenuItem.Click += new System.EventHandler(this.DisplayFileToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -175,6 +193,8 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem playbackToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem displayFileToolStripMenuItem;
     }
 }
 

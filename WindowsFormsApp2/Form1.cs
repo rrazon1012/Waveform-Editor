@@ -172,8 +172,7 @@ namespace WindowsFormsApp2
         {
             DrawString("Stopped");
             mciSendString("save recsound " + output, null, 0, IntPtr.Zero);
-            mciSendString("close recsound ", null, 0, IntPtr.Zero);
-            openTime(output);
+            mciSendString("close recsound ", null, 0, IntPtr.Zero);            
         }
 
         public void DrawString(String msg)
@@ -190,6 +189,18 @@ namespace WindowsFormsApp2
             drawFont.Dispose();
             drawBrush.Dispose();
             formGraphics.Dispose();
+        }
+
+        private void PlaybackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DrawString("Playing...");
+            mciSendString("play recsound notify", null, 0, IntPtr.Zero);
+            mciSendString("close recsound ", null, 0, IntPtr.Zero);
+        }
+
+        private void DisplayFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openTime(output);
         }
     }
 }
