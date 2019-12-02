@@ -31,7 +31,7 @@ namespace WindowsFormsApp2
             dft = new DFT();
             var watch = new System.Diagnostics.Stopwatch();
             watch.Start();
-            freq = dft.dft(samples);
+            freq = dft.paralleldft(samples);
             watch.Stop();
             Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
             chart1.Series.Add("Amplitude");

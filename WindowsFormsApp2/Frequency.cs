@@ -16,7 +16,7 @@ namespace WindowsFormsApp2
 
     public partial class Frequency : Form
     {
-
+        
         byte[] buffer;
         double[] samples;
         double ymax;
@@ -40,10 +40,28 @@ namespace WindowsFormsApp2
         int fmtextrasize;
         int DataID;
         int DataSize;
-
-
+        
         List<DataPoint> selectedPoints = null;
         double[] copyArray;
+        public Frequency(IntPtr b, int length)
+        {
+            try
+            {
+                List<double> samplez = new List<double>();
+                select = false;                
+                
+                for (int i = 0; i <1000; i++)
+                {
+                    samplez.Add((double)b+i);
+                }
+                samples = samplez.ToArray();                
+                InitializeComponent();
+            }
+            catch (System.OutOfMemoryException e)
+            {
+                Console.WriteLine(e);
+            }
+        }
         public Frequency()
         {
             try
@@ -95,14 +113,55 @@ namespace WindowsFormsApp2
             }
         }
 
+        public Frequency(String path) {
+            List<double> samplez = new List<double>();
+            select = false;
+            buffer = File.ReadAllBytes(path);
+            System.IO.MemoryStream memstream = new System.IO.MemoryStream(buffer);
+            System.IO.BinaryReader binreader = new System.IO.BinaryReader(memstream);
+
+            ChunkId = binreader.ReadInt32();
+            filesize = binreader.ReadInt32();
+            rifftype = binreader.ReadInt32();
+            fmtID = binreader.ReadInt32();
+            fmtsize = binreader.ReadInt32();
+            fmtcode = binreader.ReadInt16();
+            channels = binreader.ReadInt16();
+            samplerate = binreader.ReadInt32();
+            fmtAvgBPS = binreader.ReadInt32();
+            fmtblockalign = binreader.ReadInt16();
+            bitdepth = binreader.ReadInt16();
+
+            if (fmtsize == 18)
+            {
+                fmtextrasize = binreader.ReadInt16();
+                binreader.ReadBytes(fmtextrasize);
+            }
+
+            DataID = binreader.ReadInt32();
+            DataSize = binreader.ReadInt32();
+
+            for (int i = 0; i<(DataSize - 1) / 2; i++)
+            {
+                samplez.Add(Convert.ToDouble(binreader.ReadInt16()));
+            }
+            samples = samplez.ToArray();
+            select = false;
+            InitializeComponent();
+        }
+
         private void Frequency_Load(object sender, EventArgs e)
         {
             chart1.Series.Add("wave");
             chart1.Series["wave"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
             chart1.Series["wave"].ChartArea = "ChartArea1";
             chart1.Series["wave"].Color = Color.Red;
+            chart1.ChartAreas[0].AxisX.IsStartedFromZero = false;
+            chart1.ChartAreas[0].AxisY.IsStartedFromZero = false;
             chart1.Series["wave"].Points.DataBindY(samples);
+            chart1.ResetAutoValues();
             ymax = chart1.ChartAreas[0].AxisY.Maximum;
+            chart1.ChartAreas[0].AxisX.ScaleView.Zoom(0d,1500d);
             chart1.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
             chart1.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
             chart1.MouseWheel += chart1_MouseWheel;
